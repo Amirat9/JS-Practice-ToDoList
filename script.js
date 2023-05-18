@@ -1,11 +1,8 @@
-style.css;
-images.DS_Store;
-index.html;
-readme.md;
-script.js; // Global DOM variables
+// Global DOM variables
 const itemForm = document.getElementById('item-form');
 const itemInput = document.getElementById('item-input');
 const itemList = document.getElementById('item-list');
+const clearButton = document.getElementById('clear');
 
 // Utility Functions
 // Create a new Icon element for the button
@@ -56,5 +53,26 @@ function addItem(e) {
   itemList.appendChild(newItemElement);
 }
 
+// Remove an item from the list
+function removeItem(e) {
+  if (e.target.parentElement.classList.contains('remove-item')) {
+    if (confirm('Are you sure?')) {
+      e.target.parentElement.parentElement.remove()
+    }
+  }
+}
+
+// Clear all items from the list
+function clearAll(e) { 
+  if(e.target.classList.contains('btn-clear')) {
+    if(confirm('Are you sure?')) {
+      const itemsArray = Array.from(itemList.children);
+      itemsArray.forEach(item => item.remove());
+    }
+  }
+}
+
 // Event Listeners
 itemForm.addEventListener('submit', addItem);
+itemList.addEventListener('click', removeItem);
+clearButton.addEventListener('click', clearAll);
